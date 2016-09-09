@@ -49,3 +49,7 @@ class Hues(str):
 
   def __str__(self):
     return colorize(self.__string, self.__hue_stack)
+
+  @staticmethod
+  def train(*args):
+    return ''.join(map(str, args))
