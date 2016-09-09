@@ -23,6 +23,7 @@ def annihilate(predicate, stack):
   return extra + (head,) if head else extra
 
 def annihilator(predicate):
+  '''Build a partial annihilator for given predicate.'''
   return partial(annihilate, predicate)
 
 def dedup(stack):
@@ -33,4 +34,8 @@ def dedup(stack):
   return reduce(reducer, stack, tuple())
 
 def apply(funcs, stack):
+  '''Apply functions to the stack, passing the resulting stack to next state.'''
   return reduce(lambda x, y: y(x), funcs, stack)
+
+
+__all__ = ('zero_break', 'annihilator', 'dedup', 'apply')

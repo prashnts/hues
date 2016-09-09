@@ -25,3 +25,20 @@ HI_BG = ANSIColors(*range(100, 108))
 
 # Terminal sequence format
 SEQ = '\033[%sm'
+
+
+def __gen_keywords__(*args, **kwargs):
+  '''Helper function to generate single escape sequence mapping.'''
+  fields = tuple()
+  values = tuple()
+
+  for tpl in args:
+    fields += tpl._fields
+    values += tpl
+  for prefix, tpl in kwargs.items():
+    fields += tuple(map(lambda x: '_'.join([prefix, x]), tpl._fields))
+    values += tpl
+
+  return namedtuple('ANSISequences', fields)(*values)
+
+KEYWORDS = __gen_keywords__(STYLE, FG, bg=BG, bright=HI_FG, bg_bright=HI_BG)

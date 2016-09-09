@@ -1,8 +1,7 @@
-import hues.colortable as colortable
+from hues.colortable import FG, BG, HI_FG, HI_BG, STYLE, SEQ, KEYWORDS
 
 
 def test_foreground_colors():
-  FG = colortable.FG
   assert FG.black   == 30
   assert FG.red     == 31
   assert FG.green   == 32
@@ -13,7 +12,6 @@ def test_foreground_colors():
   assert FG.white   == 37
 
 def test_background_colors():
-  BG = colortable.BG
   assert BG.black   == 40
   assert BG.red     == 41
   assert BG.green   == 42
@@ -24,7 +22,6 @@ def test_background_colors():
   assert BG.white   == 47
 
 def test_bright_foreground_colors():
-  HI_FG = colortable.HI_FG
   assert HI_FG.black   == 90
   assert HI_FG.red     == 91
   assert HI_FG.green   == 92
@@ -35,7 +32,6 @@ def test_bright_foreground_colors():
   assert HI_FG.white   == 97
 
 def test_bright_background_colors():
-  HI_BG = colortable.HI_BG
   assert HI_BG.black   == 100
   assert HI_BG.red     == 101
   assert HI_BG.green   == 102
@@ -46,12 +42,15 @@ def test_bright_background_colors():
   assert HI_BG.white   == 107
 
 def test_ansi_styles():
-  STYL = colortable.STYLE
-  assert STYL.reset     == 0
-  assert STYL.bold      == 1
-  assert STYL.italic    == 3
-  assert STYL.underline == 4
+  assert STYLE.reset     == 0
+  assert STYLE.bold      == 1
+  assert STYLE.italic    == 3
+  assert STYLE.underline == 4
 
 def test_sequence():
-  SEQ = colortable.SEQ
-  assert SEQ % colortable.BG.black == '\033[40m'
+  assert SEQ % BG.black == '\033[40m'
+
+def test_keywords():
+  assert KEYWORDS.bg_black == BG.black
+  assert KEYWORDS.bg_bright_black == HI_BG.black
+  assert KEYWORDS.bold == STYLE.bold
