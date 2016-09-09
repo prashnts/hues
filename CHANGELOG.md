@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Missing `MANIFEST.in` caused pip builds to fail..
 - Added `__unicode__` for Python 2.
 
+### Added
+- Test coverage.
+
 
 ## [0.1.0] - 2016-09-09
 ### Added
