@@ -1,15 +1,19 @@
+import re
+
 from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
-__version__ = '0.0.1'
-
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-  long_description = f.read()
+with open(path.join(here, 'README.md'), encoding='utf-8') as fp:
+  long_description = fp.read()
 
+with open(path.join(here, 'hues', '__init__.py'), encoding='utf-8') as fp:
+  rex = r'^__version__ = \((\d+?), (\d+?), (\d+?)\)$'
+  vtp = re.search(rex, fp.read(), re.M).groups()
+  __version__ = '.'.join(vtp)
 
 install_requires = []
 setup_requires = ['pytest-runner',]
