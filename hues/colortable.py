@@ -8,11 +8,12 @@ ANSIColors = namedtuple('ANSIColors', [
   'black', 'red', 'green', 'yellow',
   'blue', 'magenta', 'cyan', 'white',
 ])
+ANSIStyles = namedtuple('ANSIStyles', [
+  'reset', 'bold', 'italic', 'underline',
+])
 
 # Style Codes
-STYLE = namedtuple('ANSIStyles', [
-  'reset', 'bold', 'italic', 'underline',
-])(0, 1, 3, 4)
+STYLE = ANSIStyles(0, 1, 3, 4)
 
 # Regular Colors
 FG = ANSIColors(*range(30, 38))
