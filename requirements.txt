@@ -1,2 +1,4 @@
+coverage==4.2
 py==1.4.31
 pytest==3.0.2
+pytest-runner==2.9

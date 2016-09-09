@@ -1,0 +1,11 @@
+engines:
+  pep8:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - python
+ratings:
+  paths:
+  - "**.py"
