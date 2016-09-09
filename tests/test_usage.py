@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import hues
 from hues import hue
 
