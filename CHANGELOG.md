@@ -4,10 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.1.0] - 2016-09-09
 ### Added
 - Implementation and tests for a deterministic PDA routine helpers.
 - Color tables generator.
+- Alpha release.
+
+### Changed
+- Readme updated.
 
 
 ## [0.0.1] - 2016-09-09

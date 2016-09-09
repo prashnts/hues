@@ -12,4 +12,4 @@ def test_usage():
 def test_chaining():
   p1 = hue('^').bg_blue
   p2 = hue('*').blue
-  assert hue.train(p1, p2) == '\033[44m^\033[0m\033[34m*\033[0m'
+  assert str(hue.train(p1, p2)) == '\033[44m^\033[0m\033[34m*\033[0m'
