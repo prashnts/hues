@@ -40,7 +40,7 @@ setup(
     'Programming Language :: Python :: 3.4',
     'Topic :: Software Development :: Libraries :: Python Modules'
   ],
-  keywords='',
+  keywords='color colour terminal text ansi hues unicorns',
   packages=['hues'],
   author='Prashant Sinha',
   install_requires=install_requires,
