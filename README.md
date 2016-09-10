@@ -32,7 +32,7 @@ Each `hue` string is self closing, so you can't accidentally color your whole te
 
 ## Colors
 
-All 16 glorious ANSI colors are available for both background and foreground. Assorted text styles such as **`bold`**, _`italics`_ and <ul>`underline`</ul> are also available. Too many colors? Worry not fam, go to town with `reset` attribute.
+All 16 glorious ANSI colors are available for both background and foreground. Assorted text styles such as **`bold`**, _`italics`_ and <u>`underline`</u> are also available. Too many colors? Worry not fam, go to town with `reset` attribute.
 
 
 ## Todo
