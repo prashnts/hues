@@ -1,0 +1,5 @@
+colors:
+  default: white
+themes:
+  powerline:
+    right_sep: 

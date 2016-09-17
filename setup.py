@@ -15,9 +15,9 @@ with open(path.join(here, 'hues', '__init__.py'), encoding='utf-8') as fp:
   vtp = re.search(rex, fp.read(), re.M).groups()
   __version__ = '.'.join(vtp)
 
-install_requires = []
+install_requires = ['PyYAML',]
 setup_requires = ['pytest-runner',]
-test_requirements = ['pytest', 'coverage',]
+test_requirements = ['pytest', 'coverage', 'pyfakefs']
 
 
 setup(

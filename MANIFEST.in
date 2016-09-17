@@ -2,3 +2,4 @@ include README.md
 include requirements.txt
 include CHANGELOG.md
 include LICENSE
+include hues/.hues.yml
