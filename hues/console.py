@@ -8,6 +8,10 @@ from .huestr import Hues
 
 CONFIG_FNAME = '.hues.yml'
 
+if sys.version_info.major == 2:
+  class FileNotFoundError(IOError):
+    '''Implement FileNotFoundError in Python 2'''
+
 
 class InvalidConfiguration(Exception):
   '''Raise when configuration is invalid.'''
@@ -35,7 +39,7 @@ class _Console(object):
           if type(conf) is not dict:
             raise InvalidConfiguration('Configuration at %s is not a dictionary.' % confl)
           return conf
-      except OSError:
+      except FileNotFoundError:
         parent = os.path.dirname(cdir)
         if recurse and parent != cdir:
           return _load(parent, recurse=True)
