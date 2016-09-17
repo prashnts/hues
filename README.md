@@ -41,4 +41,3 @@ All 16 glorious ANSI colors are available for both background and foreground. As
 - [ ] Unicorns required.
 
 > Back in my days, we didn't even have colors!
-
