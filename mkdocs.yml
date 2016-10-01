@@ -1,0 +1,9 @@
+site_name: hues
+site_url: https://hues.noop.pw
+repo_url: https://github.com/prashnts/hues/
+site_author: Prashant Sinha
+
+markdown_extensions:
+  - smarty
+  - toc:
+      permalink: True

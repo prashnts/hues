@@ -1,6 +1,6 @@
 import re
 
-from setuptools import setup, find_packages
+from setuptools import setup
 from codecs import open
 from os import path
 
@@ -15,8 +15,8 @@ with open(path.join(here, 'hues', '__init__.py'), encoding='utf-8') as fp:
   vtp = re.search(rex, fp.read(), re.M).groups()
   __version__ = '.'.join(vtp)
 
-install_requires = ['PyYAML',]
-setup_requires = ['pytest-runner',]
+install_requires = ('PyYAML',)
+setup_requires = ('pytest-runner',)
 test_requirements = ['pytest', 'coverage', 'pyfakefs']
 
 
