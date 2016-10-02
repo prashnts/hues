@@ -1,11 +1,6 @@
 # Hues
+This is the 90s and your terminal can display _16_ glorious colors. Your Python scripts deserve the some color love. `Hues` makes printing to console in color easy. Just grab the package from `PIP`, and your monochromatic days will be a thing of past!
 
-This is the 90s and your terminal can display _16_ glorious colors.
-Your Python scripts deserve the some color love. `Hues` makes printing
-to console in color easy.
-
-Just grab the package from `PIP`, and your monochromatic days will be a
-thing of past!
 
 ## Quickstart
 
@@ -15,13 +10,25 @@ Go, grab the latest version from PIP. Run:
 pip install hues
 ```
 
-Then, in your scripts, do this:
+Then, in your scripts you can do this:
 
 ```python
->>> from hues import hue
->>> print(hue('unicorns!').bright_cyan.bold)
-```
+import hues
 
+hues.info('Destroying the universe')
+
+try:
+  destroyinator()
+except IncomingPerryThePlatipus:
+  hues.error('Curse you Perry the Platipus!')
+else:
+  hues.success('Destroyed the universe.')
+```
+ 
+
+## Configuration
+
+[TODO]
 
 _whoa!_
 
@@ -41,9 +48,5 @@ Each `hue` string is self closing, so you can't accidentally color your whole te
 All 16 glorious ANSI colors are available for both background and foreground. Assorted text styles such as **`bold`**, _`italics`_ and <u>`underline`</u> are also available. Too many colors? Worry not fam, go to town with `reset` attribute.
 
 
-## Todo
-- [ ] Expand this readme.
-- [ ] Add screenshots!
-- [ ] Unicorns required.
 
 > Back in my days, we didn't even have colors!

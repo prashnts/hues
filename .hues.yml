@@ -1,0 +1,9 @@
+labels:
+  info: INFO
+  warn: WARN
+  error: ERR
+  success: S
+hues:
+  time: blue
+options:
+  theme: powerline
