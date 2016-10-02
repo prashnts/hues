@@ -8,6 +8,7 @@ monochromatic days will be a thing of past!
 
 ![Preview](docs/preview.jpg)
 
+[![Build Status](https://img.shields.io/travis/prashnts/hues/master.svg)](https://travis-ci.org/prashnts/hues) [![Test Coverage](https://img.shields.io/codeclimate/coverage/github/prashnts/hues.svg)](https://codeclimate.com/github/prashnts/hues) [![PyPI](https://img.shields.io/pypi/v/hues.svg)](https://pypi.python.org/pypi/hues)
 
 ## Quickstart
 
