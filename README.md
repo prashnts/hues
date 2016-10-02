@@ -13,9 +13,14 @@ pip install hues
 Then, in your scripts, do this:
 
 ```python
->>> from hues import hue
->>> print(hue('unicorns!').bright_cyan.bold)
+>>> import hues
+>>> hues.log('42')
+>>> hues.info('42')
 ```
+
+### Configuration
+
+[TODO]
 
 _whoa!_
 

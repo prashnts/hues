@@ -1,5 +1,5 @@
 # Unicorns
-from .huestr import HueString as hue
+from .huestr import HueString as huestr
 from .console import Config, SimpleConsole, PowerlineConsole
 
 __version__ = (0, 2, 1)
@@ -19,4 +19,4 @@ success = console.success
 
 del conf
 
-__all__ = ('hue', 'console', 'log', 'info', 'warn', 'error', 'success')
+__all__ = ('huestr', 'console', 'log', 'info', 'warn', 'error', 'success')
