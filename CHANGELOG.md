@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- Fixed old reference name in a test, which was causing builds to fail.
+
 ## [0.2.2] - 2016-10-02
 ### Fixed
 - Important fix. Setup.py was missing `include_package_data` flag.

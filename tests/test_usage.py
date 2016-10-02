@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import hues
-from hues import hue
+from hues import huestr
 
 
 def test_sanity():
@@ -9,4 +9,4 @@ def test_sanity():
 
 
 def test_usage():
-  assert hue('unicorn').red.bg_black.colorized == '\033[31;40municorn\033[0m'
+  assert huestr('unicorn').red.bg_black.colorized == '\033[31;40municorn\033[0m'
