@@ -40,11 +40,12 @@ setup(
     'Programming Language :: Python :: 3.4',
     'Topic :: Software Development :: Libraries :: Python Modules'
   ],
-  keywords='color colour terminal text ansi hues unicorns',
+  keywords='color colour terminal text ansi hues unicorns console',
   packages=['hues'],
   author='Prashant Sinha',
   install_requires=install_requires,
   setup_requires=setup_requires,
   tests_require=test_requirements,
-  author_email='prashant@noop.pw'
+  author_email='prashant@noop.pw',
+  include_package_data=True,
 )

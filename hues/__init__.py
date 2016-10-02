@@ -2,7 +2,7 @@
 from .huestr import HueString as huestr
 from .console import Config, SimpleConsole, PowerlineConsole
 
-__version__ = (0, 2, 1)
+__version__ = (0, 2, 2)
 
 conf = Config()
 

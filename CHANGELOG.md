@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.2.2] - 2016-10-02
+### Fixed
+- Important fix. Setup.py was missing `include_package_data` flag.
+
+
+## [0.2.1] - 2016-10-02
+### Fixed
+- Configuration wasn't being updated. Fixed.
+
+
+## [0.2.0] - 2016-10-02
+### Added
+- Helpers funcs: hues.log, hues.error etc.
+- Powerline-ish theme!
+- Sane, new API.
+
+### Changed
+- Added multiple API enhancements. Particularly, enabling shortcut functions.
+- Reduced the complexity of the `console` class.
+- Configuration is stored in a `.hues.yml` file.
+
+
 ## [0.1.1] - 2016-09-10
 ### Fixed
 - Missing `MANIFEST.in` caused pip builds to fail..
@@ -30,7 +52,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Project skeleton.
 
 
-[Unreleased]: https://github.com/prashnts/hues/compare/0.1.0...HEAD
+[UNRELEASED]: https://github.com/prashnts/hues/compare/0.2.1...HEAD
+[0.2.2]: https://github.com/prashnts/hues/compare/0.2.1...0.2.2
+[0.2.1]: https://github.com/prashnts/hues/compare/0.2.0...0.2.1
+[0.2.0]: https://github.com/prashnts/hues/compare/0.1.1...0.2.0
 [0.1.1]: https://github.com/prashnts/hues/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/prashnts/hues/compare/0.0.1...0.1.0
 
