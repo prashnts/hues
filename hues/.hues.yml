@@ -14,5 +14,7 @@ labels:
 options:
   show_time: yes
   time_format: '%H:%M:%S'
+
   add_newline: yes
+
   theme: simple

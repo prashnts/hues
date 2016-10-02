@@ -21,13 +21,12 @@ class InvalidConfiguration(Exception):
   '''Raise when configuration is invalid.'''
 
 
-class _Console(object):
-  def __init__(self, stdout=sys.stdout):
-    self.stdout = stdout
-    self.conf = self._resolve_config()
+class Config(object):
+  def __init__(self):
+    self.resolve_config()
 
   @staticmethod
-  def _load_config():
+  def load_config():
     '''Find and load configuration params.
     Config files are loaded in the following order:
     - Beginning from current working dir, all the way to the root.
@@ -60,17 +59,22 @@ class _Console(object):
     conf.update(local_conf)
     return conf
 
-  def _resolve_config(self):
+  def resolve_config(self):
     '''Resolve configuration params to native instances'''
-    conf = self._load_config()
+    conf = self.load_config()
     for k in conf['hues']:
       conf['hues'][k] = getattr(KEYWORDS, conf['hues'][k])
     as_tuples = lambda name, obj: namedtuple(name, obj.keys())(**obj)
-    hues = as_tuples('Hues', conf['hues'])
-    opts = as_tuples('Options', conf['options'])
-    labels = as_tuples('Labels', conf['labels'])
-    conf = namedtuple('HueConfig', ('hues', 'opts', 'labels'))
-    return conf(hues, opts, labels)
+
+    self.hues = as_tuples('Hues', conf['hues'])
+    self.opts = as_tuples('Options', conf['options'])
+    self.labels = as_tuples('Labels', conf['labels'])
+
+
+class SimpleConsole(object):
+  def __init__(self, conf, stdout=sys.stdout):
+    self.stdout = stdout
+    self.conf = conf
 
   def _raw_log(self, *args):
     writeout = u''.join([x.colorized for x in args])
@@ -78,8 +82,6 @@ class _Console(object):
     if self.conf.opts.add_newline:
       self.stdout.write('\n')
 
-
-class SimpleConsole(_Console):
   def _base_log(self, contents):
     def build_component(content, color=None):
       fg = KEYWORDS.defaultfg if color is None else color
@@ -132,7 +134,7 @@ class SimpleConsole(_Console):
     return self._base_log(args)
 
 
-class Powerline(SimpleConsole):
+class PowerlineConsole(SimpleConsole):
   def _base_log(self, contents):
     def find_fg_color(bg):
       if bg >= 100:
@@ -145,7 +147,7 @@ class Powerline(SimpleConsole):
     def build_component(content, color=None, next_fg=None):
       fg = KEYWORDS.defaultfg if color is None else color
       text_bg = fg + 10  # Background Escape seq offsets by 10.
-      text_fg = find_fg_color(fg)
+      text_fg = find_fg_color(text_bg)
       next_bg = KEYWORDS.defaultbg if next_fg is None else (next_fg + 10)
 
       return (
@@ -157,8 +159,11 @@ class Powerline(SimpleConsole):
 
     for ix, content in enumerate(contents):
       try:
-        next_fg = contents[ix + 1][1]
-      except (IndexError, TypeError):
+        if type(contents[ix + 1]) is tuple:
+          next_fg = contents[ix + 1][1]
+        else:
+          next_fg = None
+      except IndexError:
         next_fg = None
       if type(content) is tuple and len(content) == 2:
         value, color = content
