@@ -82,9 +82,9 @@ class Config(object):
 
 
 class SimpleConsole(object):
-  def __init__(self, conf, stdout=sys.stdout):
+  def __init__(self, conf=None, stdout=sys.stdout):
     self.stdout = stdout
-    self.conf = conf
+    self.conf = conf if conf else Config()
 
   def _raw_log(self, *args):
     writeout = u''.join([x.colorized for x in args])
