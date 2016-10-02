@@ -1,5 +1,6 @@
 colors:
   time: white
+  default: white
   label: blue
   info: cyan
   error: red

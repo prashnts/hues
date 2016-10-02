@@ -60,31 +60,52 @@ class _Console(object):
 
   def _base_log(self, *args, **kwargs):
     for arg in args:
-      if isinstance(arg, HueString):
-        self.stdout.write(arg.colorized)
-      else:
-        self.stdout.write(str(arg))
+      if not isinstance(arg, HueString):
+        hue = getattr(FG, self.config['colors']['default'])
+        arg = HueString(str(arg), hue_stack=(hue,))
+      self.stdout.write(arg.colorized)
     if kwargs.get('newline', True):
       self.stdout.write('\n')
 
 
 class SimpleConsole(_Console):
+  info_label = 'I'
+  warn_label = 'W'
+  error_label = 'E'
+
   def log(self, *args):
     '''Generate a simple log string.
     Format: [{time}] - {messages}
     '''
-    payload = []
     if self.config['showtime']:
-      time = '[%s] - ' % datetime.now().strftime(self.config['timefmt'])
-      hue = getattr(FG, self.config['colors']['time'])
-      payload.append(HueString(time, hue_stack=(hue,)))
-    self._base_log(*payload, *args)
+      time = '[%s]' % datetime.now().strftime(self.config['timefmt'])
+      args = self._labeled_log(time, 'time') + args
+    self._base_log(*args)
 
-  def error(self, *args):
-    pass
-
-  def warn(self, *args):
-    pass
+  def _labeled_log(self, label, kind):
+    '''Generate a labeled and colored log string.
+    '''
+    hue = getattr(FG, self.config['colors'][kind])
+    return (HueString(label, hue_stack=(hue,)), ' - ')
 
   def info(self, *args):
-    pass
+    nargs = self._labeled_log(self.info_label, 'info') + args
+    self.log(*nargs)
+
+  def warn(self, *args):
+    nargs = self._labeled_log(self.warn_label, 'warning') + args
+    self.log(*nargs)
+
+  def error(self, *args):
+    nargs = self._labeled_log(self.error_label, 'error') + args
+    self.log(*nargs)
+
+
+class DefaultConsole(SimpleConsole):
+  info_label = 'Info'
+  warn_label = 'Warning'
+  error_label = 'Error'
+
+
+simple = SimpleConsole()
+default = DefaultConsole()
