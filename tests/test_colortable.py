@@ -1,5 +1,5 @@
 from hues.colortable import FG, BG, HI_FG, HI_BG, STYLE, SEQ, KEYWORDS
-
+# flake8: noqa
 
 def test_foreground_colors():
   assert FG.black   == 30
@@ -46,6 +46,8 @@ def test_ansi_styles():
   assert STYLE.bold      == 1
   assert STYLE.italic    == 3
   assert STYLE.underline == 4
+  assert STYLE.defaultfg == 39
+  assert STYLE.defaultbg == 49
 
 def test_sequence():
   assert SEQ % BG.black == '\033[40m'

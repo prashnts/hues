@@ -1,12 +1,18 @@
 hues:
-  default: white
-  time: white
+  default: defaultfg
+  time: magenta
   label: blue
   info: cyan
   success: green
   error: red
-  warning: yellow
+  warn: yellow
+labels:
+  info: INFO
+  warn: WARNING
+  error: ERROR
+  success: SUCCESS
 options:
   show_time: yes
   time_format: '%H:%M:%S'
   add_newline: yes
+  theme: simple

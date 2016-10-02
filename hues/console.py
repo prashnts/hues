@@ -7,7 +7,7 @@ from datetime import datetime
 from collections import namedtuple
 
 from .huestr import HueString
-from .colortable import KEYWORDS
+from .colortable import KEYWORDS, FG
 
 if sys.version_info.major == 2:
   str = unicode # noqa
@@ -64,10 +64,12 @@ class _Console(object):
     conf = self._load_config()
     for k in conf['hues']:
       conf['hues'][k] = getattr(KEYWORDS, conf['hues'][k])
-    hues = namedtuple('Hues', conf['hues'].keys())(**conf['hues'])
-    opts = namedtuple('Options', conf['options'].keys())(**conf['options'])
-    conf = namedtuple('HueConfig', ('hue', 'opts'))
-    return conf(hues, opts)
+    as_tuples = lambda name, obj: namedtuple(name, obj.keys())(**obj)
+    hues = as_tuples('Hues', conf['hues'])
+    opts = as_tuples('Options', conf['options'])
+    labels = as_tuples('Labels', conf['labels'])
+    conf = namedtuple('HueConfig', ('hues', 'opts', 'labels'))
+    return conf(hues, opts, labels)
 
   def _raw_log(self, *args):
     writeout = u''.join([x.colorized for x in args])
@@ -75,48 +77,95 @@ class _Console(object):
     if self.conf.opts.add_newline:
       self.stdout.write('\n')
 
-  def getTime(self):
-    return datetime.now().strftime(self.conf.opts.time_format)
-
 
 class SimpleConsole(_Console):
-  info_label = 'Info'
-  warn_label = 'Warning'
-  error_label = 'Error'
+  def _base_log(self, contents):
+    def build_component(content, color=None):
+      fg = KEYWORDS.defaultfg if color is None else color
+      return (
+        HueString(u'{}'.format(content), hue_stack=(fg,)),
+        HueString(u' - '),
+      )
 
-  def _base_log(self, contents, label=None, label_color=None):
     nargs = ()
+    for content in contents:
+      if type(content) is tuple and len(content) == 2:
+        value, color = content
+      else:
+        value, color = content, None
+      nargs += build_component(value, color)
+    return self._raw_log(*nargs[:-1])
 
-    if self.conf.opts.show_time:
-      timestr = '[{}]'.format(self.getTime())
-      nargs += (
-        HueString(timestr, hue_stack=(self.conf.hue.time,)),
-        HueString(' - '),
-      )
+  def _getTime(self, wrap=None):
+    time = datetime.now().strftime(self.conf.opts.time_format)
+    return wrap.format(time) if wrap else time
 
-    if label:
-      nargs += (
-        HueString(label, hue_stack=(label_color,)),
-        HueString(' - '),
-      )
+  def log(self, *args, **kwargs):
+    nargs = []
+    if kwargs.get('time') or ('time' not in kwargs and self.conf.opts.show_time):
+      nargs.append((self._getTime(), self.conf.hues.time))
 
-    content = u' '.join([str(x) for x in contents])
-    nargs += (
-      HueString(content, hue_stack=(self.conf.hue.default,)),
-    )
-    return self._raw_log(*nargs)
-
-  def log(self, *args):
-    return self._base_log(args)
+    for k, v in kwargs.items():
+      if k in ('info', 'warn', 'error', 'success'):
+        if v:
+          label = getattr(self.conf.labels, k)
+          color = getattr(self.conf.hues, k)
+          nargs.append((label, color))
+    content = u' '.join([str(x) for x in args])
+    nargs.append((content, self.conf.hues.default))
+    return self._base_log(nargs)
 
   def info(self, *args):
-    return self._base_log(args, self.info_label, self.conf.hue.info)
+    return self.log(*args, info=True)
 
   def warn(self, *args):
-    return self._base_log(args, self.warn_label, self.conf.hue.warning)
+    return self.log(*args, warn=True)
 
   def error(self, *args):
-    return self._base_log(args, self.error_label, self.conf.hue.error)
+    return self.log(*args, error=True)
+
+  def success(self, *args):
+    return self.log(*args, success=True)
+
+  def __call__(self, *args):
+    return self._base_log(args)
 
 
-simple = SimpleConsole()
+class Powerline(SimpleConsole):
+  def _base_log(self, contents):
+    def find_fg_color(bg):
+      if bg >= 100:
+        bg -= 70    # High intensity to regular intensity.
+      if bg in (FG.green, FG.yellow, FG.white):
+        return FG.black
+      else:
+        return FG.white
+
+    def build_component(content, color=None, next_fg=None):
+      fg = KEYWORDS.defaultfg if color is None else color
+      text_bg = fg + 10  # Background Escape seq offsets by 10.
+      text_fg = find_fg_color(fg)
+      next_bg = KEYWORDS.defaultbg if next_fg is None else (next_fg + 10)
+
+      return (
+        HueString(u' {} '.format(content), hue_stack=(text_bg, text_fg)),
+        HueString(u'', hue_stack=(fg, next_bg)),
+      )
+
+    nargs = ()
+
+    for ix, content in enumerate(contents):
+      try:
+        next_fg = contents[ix + 1][1]
+      except (IndexError, TypeError):
+        next_fg = None
+      if type(content) is tuple and len(content) == 2:
+        value, color = content
+      else:
+        value, color = content, None
+      nargs += build_component(value, color, next_fg)
+
+    return self._raw_log(*nargs[:-1])
+
+
+powerline = Powerline()
