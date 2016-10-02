@@ -6,6 +6,7 @@ hues:
   success: green
   error: red
   warning: yellow
-time:
-  show: yes
-  format: '%H:%M:%S'
+options:
+  show_time: yes
+  time_format: '%H:%M:%S'
+  add_newline: yes

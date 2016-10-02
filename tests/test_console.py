@@ -59,3 +59,10 @@ class Test_Console(fake_fs_unittest.TestCase):
     with self.assertRaises(InvalidConfiguration) as e:
       _Console._load_config()
     assert 'invalid YAML' in str(e.exception)
+
+
+def test_resolved_config():
+  cs = _Console()
+  assert hasattr(cs.conf, 'hue')
+  assert hasattr(cs.conf, 'opts')
+  assert hasattr(cs.conf.hue, 'default')

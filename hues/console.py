@@ -7,7 +7,7 @@ from datetime import datetime
 from collections import namedtuple
 
 from .huestr import HueString
-from .colortable import FG, BG, HI_FG, HI_BG, SEQ, STYLE, KEYWORDS
+from .colortable import KEYWORDS
 
 if sys.version_info.major == 2:
   str = unicode # noqa
@@ -63,59 +63,60 @@ class _Console(object):
     '''Resolve configuration params to native instances'''
     conf = self._load_config()
     for k in conf['hues']:
-      conf['hues'][k] = getattr(FG, conf['hues'][k])
+      conf['hues'][k] = getattr(KEYWORDS, conf['hues'][k])
     hues = namedtuple('Hues', conf['hues'].keys())(**conf['hues'])
-    time = namedtuple('Time', conf['time'].keys())(**conf['time'])
-    conf = namedtuple('HueConfig', ('hue', 'time'))
-    return conf(hues, time)
+    opts = namedtuple('Options', conf['options'].keys())(**conf['options'])
+    conf = namedtuple('HueConfig', ('hue', 'opts'))
+    return conf(hues, opts)
 
-  def _base_log(self, *args, **kwargs):
-    for arg in args:
-      if not isinstance(arg, HueString):
-        arg = HueString(str(arg), hue_stack=(self.conf.hue.default,))
-      self.stdout.write(arg.colorized)
-    if kwargs.get('newline', True):
+  def _raw_log(self, *args):
+    writeout = u''.join([x.colorized for x in args])
+    self.stdout.write(writeout)
+    if self.conf.opts.add_newline:
       self.stdout.write('\n')
+
+  def getTime(self):
+    return datetime.now().strftime(self.conf.opts.time_format)
 
 
 class SimpleConsole(_Console):
-  info_label = 'I'
-  warn_label = 'W'
-  error_label = 'E'
-
-  def log(self, *args):
-    '''Generate a simple log string.
-    Format: [{time}] - {messages}
-    '''
-    if self.config['showtime']:
-      time = '[%s]' % datetime.now().strftime(self.config['timefmt'])
-      args = self._labeled_log(time, 'time') + args
-    self._base_log(*args)
-
-  def _labeled_log(self, label, kind):
-    '''Generate a labeled and colored log string.
-    '''
-    hue = getattr(FG, self.config['colors'][kind])
-    return (HueString(label, hue_stack=(hue,)), ' - ')
-
-  def info(self, *args):
-    nargs = self._labeled_log(self.info_label, 'info') + args
-    self.log(*nargs)
-
-  def warn(self, *args):
-    nargs = self._labeled_log(self.warn_label, 'warning') + args
-    self.log(*nargs)
-
-  def error(self, *args):
-    nargs = self._labeled_log(self.error_label, 'error') + args
-    self.log(*nargs)
-
-
-class DefaultConsole(SimpleConsole):
   info_label = 'Info'
   warn_label = 'Warning'
   error_label = 'Error'
 
+  def _base_log(self, contents, label=None, label_color=None):
+    nargs = ()
+
+    if self.conf.opts.show_time:
+      timestr = '[{}]'.format(self.getTime())
+      nargs += (
+        HueString(timestr, hue_stack=(self.conf.hue.time,)),
+        HueString(' - '),
+      )
+
+    if label:
+      nargs += (
+        HueString(label, hue_stack=(label_color,)),
+        HueString(' - '),
+      )
+
+    content = u' '.join([str(x) for x in contents])
+    nargs += (
+      HueString(content, hue_stack=(self.conf.hue.default,)),
+    )
+    return self._raw_log(*nargs)
+
+  def log(self, *args):
+    return self._base_log(args)
+
+  def info(self, *args):
+    return self._base_log(args, self.info_label, self.conf.hue.info)
+
+  def warn(self, *args):
+    return self._base_log(args, self.warn_label, self.conf.hue.warning)
+
+  def error(self, *args):
+    return self._base_log(args, self.error_label, self.conf.hue.error)
+
 
 simple = SimpleConsole()
-default = DefaultConsole()
