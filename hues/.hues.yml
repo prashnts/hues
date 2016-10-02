@@ -1,5 +1,16 @@
 colors:
-  default: white
-themes:
-  powerline:
-    right_sep: 
+  time: white
+  label: blue
+  info: cyan
+  error: red
+  warning: yellow
+  success: green
+separators:
+  simple: '-'
+  powerline: ''
+arrows:
+  simple: '->'
+  powerline: '❯'
+
+showtime: yes
+timefmt: '%H:%M:%S'
