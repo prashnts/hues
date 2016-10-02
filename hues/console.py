@@ -51,14 +51,22 @@ class Config(object):
       except yaml.YAMLError:
         raise InvalidConfiguration('Configuration at %s is an invalid YAML file.' % confl)
 
+    def _update(prev, next):
+      for k, v in next.items():
+        if isinstance(v, dict):
+          prev[k] = _update(prev.get(k, {}), v)
+        else:
+          prev[k] = v
+      return prev
+
     conf = _load(os.path.dirname(__file__))
 
     if not force_default:
       home_conf = _load(os.path.expanduser('~'))
       local_conf = _load(os.path.abspath(os.curdir), recurse=True)
 
-      conf.update(home_conf)
-      conf.update(local_conf)
+      _update(conf, home_conf)
+      _update(conf, local_conf)
     return conf
 
   def resolve_config(self):
