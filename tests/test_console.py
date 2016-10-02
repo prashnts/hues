@@ -35,27 +35,27 @@ class Test_Console(fake_fs_unittest.TestCase):
 
   def test_home_config(self):
     os.chdir('/var/doom/baz')
-    cs = _Console()
-    assert cs.config['colors']['default'] == 'red'
+    cs = _Console._load_config()
+    assert cs['colors']['default'] == 'red'
 
   def test_local_config(self):
     os.chdir('/var/foo')
-    cs = _Console()
-    assert cs.config['colors']['default'] == 'green'
+    cs = _Console._load_config()
+    assert cs['colors']['default'] == 'green'
 
   def test_local_nested_config(self):
     os.chdir('/var/foo/bar/baz')
-    cs = _Console()
-    assert cs.config['colors']['default'] == 'green'
+    cs = _Console._load_config()
+    assert cs['colors']['default'] == 'green'
 
   def test_invalid_config(self):
     os.chdir('/var/invalid')
     with self.assertRaises(InvalidConfiguration) as e:
-      _Console()
+      _Console._load_config()
     assert 'not a dictionary' in str(e.exception)
 
   def test_invalid_yaml(self):
     os.chdir('/var/invalidyml')
     with self.assertRaises(InvalidConfiguration) as e:
-      _Console()
+      _Console._load_config()
     assert 'invalid YAML' in str(e.exception)

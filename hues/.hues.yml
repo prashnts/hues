@@ -1,17 +1,11 @@
-colors:
-  time: white
+hues:
   default: white
+  time: white
   label: blue
   info: cyan
+  success: green
   error: red
   warning: yellow
-  success: green
-separators:
-  simple: '-'
-  powerline: ''
-arrows:
-  simple: '->'
-  powerline: '❯'
-
-showtime: yes
-timefmt: '%H:%M:%S'
+time:
+  show: yes
+  format: '%H:%M:%S'

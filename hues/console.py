@@ -4,6 +4,7 @@ import os
 import sys
 import yaml
 from datetime import datetime
+from collections import namedtuple
 
 from .huestr import HueString
 from .colortable import FG, BG, HI_FG, HI_BG, SEQ, STYLE, KEYWORDS
@@ -22,7 +23,7 @@ class InvalidConfiguration(Exception):
 class _Console(object):
   def __init__(self, stdout=sys.stdout):
     self.stdout = stdout
-    self.config = self._load_config()
+    self.conf = self._resolve_config()
 
   @staticmethod
   def _load_config():
@@ -58,11 +59,20 @@ class _Console(object):
     conf.update(local_conf)
     return conf
 
+  def _resolve_config(self):
+    '''Resolve configuration params to native instances'''
+    conf = self._load_config()
+    for k in conf['hues']:
+      conf['hues'][k] = getattr(FG, conf['hues'][k])
+    hues = namedtuple('Hues', conf['hues'].keys())(**conf['hues'])
+    time = namedtuple('Time', conf['time'].keys())(**conf['time'])
+    conf = namedtuple('HueConfig', ('hue', 'time'))
+    return conf(hues, time)
+
   def _base_log(self, *args, **kwargs):
     for arg in args:
       if not isinstance(arg, HueString):
-        hue = getattr(FG, self.config['colors']['default'])
-        arg = HueString(str(arg), hue_stack=(hue,))
+        arg = HueString(str(arg), hue_stack=(self.conf.hue.default,))
       self.stdout.write(arg.colorized)
     if kwargs.get('newline', True):
       self.stdout.write('\n')
