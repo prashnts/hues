@@ -22,11 +22,12 @@ class InvalidConfiguration(Exception):
 
 
 class Config(object):
-  def __init__(self):
+  def __init__(self, force_default=False):
+    self.force_default = force_default
     self.resolve_config()
 
   @staticmethod
-  def load_config():
+  def load_config(force_default=False):
     '''Find and load configuration params.
     Config files are loaded in the following order:
     - Beginning from current working dir, all the way to the root.
@@ -52,16 +53,17 @@ class Config(object):
 
     conf = _load(os.path.dirname(__file__))
 
-    home_conf = _load(os.path.expanduser('~'))
-    local_conf = _load(os.path.abspath(os.curdir), recurse=True)
+    if not force_default:
+      home_conf = _load(os.path.expanduser('~'))
+      local_conf = _load(os.path.abspath(os.curdir), recurse=True)
 
-    conf.update(home_conf)
-    conf.update(local_conf)
+      conf.update(home_conf)
+      conf.update(local_conf)
     return conf
 
   def resolve_config(self):
     '''Resolve configuration params to native instances'''
-    conf = self.load_config()
+    conf = self.load_config(self.force_default)
     for k in conf['hues']:
       conf['hues'][k] = getattr(KEYWORDS, conf['hues'][k])
     as_tuples = lambda name, obj: namedtuple(name, obj.keys())(**obj)
@@ -137,8 +139,8 @@ class SimpleConsole(object):
 class PowerlineConsole(SimpleConsole):
   def _base_log(self, contents):
     def find_fg_color(bg):
-      if bg >= 100:
-        bg -= 70    # High intensity to regular intensity.
+      if bg >= 90:
+        bg -= 70    # High intensity background to regular intensity fg.
       if bg in (FG.green, FG.yellow, FG.white):
         return FG.black
       else:
@@ -147,7 +149,7 @@ class PowerlineConsole(SimpleConsole):
     def build_component(content, color=None, next_fg=None):
       fg = KEYWORDS.defaultfg if color is None else color
       text_bg = fg + 10  # Background Escape seq offsets by 10.
-      text_fg = find_fg_color(text_bg)
+      text_fg = find_fg_color(fg)
       next_bg = KEYWORDS.defaultbg if next_fg is None else (next_fg + 10)
 
       return (

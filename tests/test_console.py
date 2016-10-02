@@ -105,7 +105,7 @@ def test_raw_log_write():
 
 def test_helpers():
   stdout, write = _get_mock_stdout()
-  console = SimpleConsole(conf=Config(), stdout=stdout)
+  console = SimpleConsole(conf=Config(True), stdout=stdout)
   predicate = lambda a, b: lambda x: a in x and b in x
   anymatch = lambda colln, predicate: any([predicate(c) for c in colln])
   callargs = lambda x: [str(x) for x in x]
@@ -138,4 +138,5 @@ def test_powerline():
   console = PowerlineConsole(conf=Config(), stdout=stdout)
   console.log('foo', time=False)
   write.assert_any_call('\033[49;37m foo \033[0m')
+  console.warn('foo')
   console(('foo', 92), ('bar', 92), 'baz')
