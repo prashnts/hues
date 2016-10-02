@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Unicorns
 '''Helper module for all the goodness.'''
 import os
@@ -166,6 +167,3 @@ class Powerline(SimpleConsole):
       nargs += build_component(value, color, next_fg)
 
     return self._raw_log(*nargs[:-1])
-
-
-powerline = Powerline()
