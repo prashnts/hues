@@ -4,7 +4,11 @@ import os
 import sys
 import yaml
 
-from .huestr import Hues
+from .huestr import HueString
+
+if sys.version_info.major == 2:
+  str = unicode # noqa
+
 
 CONFIG_FNAME = '.hues.yml'
 
@@ -14,9 +18,8 @@ class InvalidConfiguration(Exception):
 
 
 class _Console(object):
-  def __init__(self, stdout=sys.stdout, stderr=sys.stderr):
+  def __init__(self, stdout=sys.stdout):
     self.stdout = stdout
-    self.stderr = stderr
     self.config = self._load_config()
 
   @staticmethod
@@ -53,5 +56,11 @@ class _Console(object):
     conf.update(local_conf)
     return conf
 
-  def _base_logger(self):
-    pass
+  def _base_log(self, *args, newline=True):
+    for arg in args:
+      if isinstance(arg, HueString):
+        self.stdout.write(arg.colorized)
+      else:
+        self.stdout.write(str(arg))
+    if newline:
+      self.stdout.write('\n')

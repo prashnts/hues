@@ -1,4 +1,4 @@
 # Unicorns
-from .huestr import Hues as hue
+from .huestr import HueString as hue
 
 __version__ = (0, 1, 1)

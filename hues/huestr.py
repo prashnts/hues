@@ -6,7 +6,6 @@ from .colortable import FG, BG, HI_FG, HI_BG, SEQ, STYLE, KEYWORDS
 from .dpda import zero_break, annihilator, dedup, apply
 
 if sys.version_info.major == 2:
-  # Python 2.7 compat.
   str = unicode # noqa
 
 
@@ -30,11 +29,11 @@ def colorize(string, stack):
     return string
 
 
-class Hues(str):
+class HueString(str):
   '''Extend the string class to support hues.'''
   def __new__(cls, string, hue_stack=None):
     '''Return a new instance of the class.'''
-    return super(Hues, cls).__new__(cls, string)
+    return super(HueString, cls).__new__(cls, string)
 
   def __init__(self, string, hue_stack=tuple()):
     self.__string = string
@@ -44,7 +43,7 @@ class Hues(str):
     try:
       code = getattr(KEYWORDS, attr)
       hues = self.__hue_stack + (code,)
-      return Hues(self.__string, hue_stack=hues)
+      return HueString(self.__string, hue_stack=hues)
     except AttributeError as e:
       raise e
 

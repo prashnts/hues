@@ -19,7 +19,7 @@ colors:
 invalid_conf = '''Invalid Conf, but valid YAML.'''
 invalid_yaml = '''Nested: Dicts: Are: Invalid!'''
 
-from hues.console import _Console, InvalidConfiguration
+from hues.console import _Console, InvalidConfiguration # noqa
 
 
 class Test_Console(fake_fs_unittest.TestCase):
@@ -51,11 +51,11 @@ class Test_Console(fake_fs_unittest.TestCase):
   def test_invalid_config(self):
     os.chdir('/var/invalid')
     with self.assertRaises(InvalidConfiguration) as e:
-      cs = _Console()
+      _Console()
     assert 'not a dictionary' in str(e.exception)
 
   def test_invalid_yaml(self):
     os.chdir('/var/invalidyml')
     with self.assertRaises(InvalidConfiguration) as e:
-      cs = _Console()
+      _Console()
     assert 'invalid YAML' in str(e.exception)

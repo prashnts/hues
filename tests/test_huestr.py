@@ -1,5 +1,5 @@
 import sys
-from hues.huestr import colorize, Hues
+from hues.huestr import colorize, HueString
 from hues.colortable import FG, BG, STYLE
 
 if sys.version_info.major == 2:
@@ -31,20 +31,20 @@ def test_reset_chained():
 
 
 def test_hues_creation():
-  obj = Hues('woot')
+  obj = HueString('woot')
   assert isinstance(obj, str)
   assert obj.colorized == 'woot'
 
 
 def test_hues_auto_stacking():
-  obj = Hues('woot').cyan.bg_green
+  obj = HueString('woot').cyan.bg_green
   assert isinstance(obj, str)
-  assert obj._Hues__hue_stack == (FG.cyan, BG.green)
+  assert obj._HueString__hue_stack == (FG.cyan, BG.green)
 
 
 def test_hues_dynamic_props_exceptions():
   try:
-    Hues('woot').noop
+    HueString('woot').noop
   except AttributeError as e:
     assert 'noop' in str(e)
   else:
@@ -52,5 +52,5 @@ def test_hues_dynamic_props_exceptions():
 
 
 def test_hues_auto_colorize():
-  obj = Hues('woot').cyan.bg_green
+  obj = HueString('woot').cyan.bg_green
   assert obj.colorized == '\033[36;42mwoot\033[0m'
