@@ -6,13 +6,14 @@
 Console API is borrowed from awesome Node.JS console api. [1]
 
 ```python
->>> from hues import console
+>>> import hues
 
->>> console.log
->>> console.error
->>> console.info
->>> console.warn
->>> console.assert
+>>> hues.log('Look, mama!')   # No time, no leaders.
+>>> hues.info('Stage 1', 'Operation started', level=0)   # Stage 1: Operation Started
+>>> hues.info('Stage 1', 'Operation started', level=2)   # ----> Stage 1: Operation Started
+>>> hues.warn('Uh, hello? Where are my memes?')
+>>> hues.abort('I give up!')
+>>> hues.error('Mann.', e)
 ```
 
 ## Default color, theme settings

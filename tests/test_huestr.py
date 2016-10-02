@@ -1,5 +1,10 @@
+import sys
 from hues.huestr import colorize, Hues
 from hues.colortable import FG, BG, STYLE
+
+if sys.version_info.major == 2:
+  # Python 2.7 compat.
+  str = unicode # noqa
 
 
 def test_correct_colorization():
