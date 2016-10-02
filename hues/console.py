@@ -52,3 +52,6 @@ class _Console(object):
     conf.update(home_conf)
     conf.update(local_conf)
     return conf
+
+  def _base_logger(self):
+    pass

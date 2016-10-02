@@ -7,7 +7,7 @@ from .dpda import zero_break, annihilator, dedup, apply
 
 if sys.version_info.major == 2:
   # Python 2.7 compat.
-  str = unicode
+  str = unicode # noqa
 
 
 OPTIMIZATION_STEPS = (
@@ -17,6 +17,7 @@ OPTIMIZATION_STEPS = (
   dedup,                    # Remove duplicates in (remaining) style values.
 )
 optimize = partial(apply, OPTIMIZATION_STEPS)
+
 
 def colorize(string, stack):
   '''Apply optimal ANSI escape sequences to the string.'''
@@ -47,12 +48,6 @@ class Hues(str):
     except AttributeError as e:
       raise e
 
-  def __str__(self):
+  @property
+  def colorized(self):
     return colorize(self.__string, self.__hue_stack)
-
-  def __unicode__(self):
-    return self.__str__()
-
-  @staticmethod
-  def train(*args):
-    return ''.join(map(str, args))
