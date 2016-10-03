@@ -1,7 +1,7 @@
 # Hues
 
 This is the 90s and your terminal can display _16_ glorious colors.
-Your Python scripts deserve the some color love. `Hues` makes printing
+Your Python scripts deserve the same color love. `Hues` makes printing
 to console in color easy. Just grab the package from `PIP`, and your
 monochromatic days will be a thing of past!
 
