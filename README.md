@@ -18,13 +18,20 @@ Go, grab the latest version from PIP. Run:
 pip install hues
 ```
 
-Then, in your scripts, do this:
+Then, in your scripts, you can do this:
 
 ```python
 >>> import hues
->>> hues.log('42')
->>> hues.info('42')
+>>> hues.log('Mission', 42)
+>>> hues.info('Finding', 42)
+>>> hues.error(41, 'is not', 42)
+>>> hues.warn('We are distracted...')
+>>> hues.info('Found', 24)
+>>> hues.success('Close enough.')
 ```
+
+![Example](docs/example-simple.jpg)
+
 
 _whoa!_
 
