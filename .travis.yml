@@ -4,9 +4,8 @@ python:
   - '3.3'
   - '3.5'
   - pypy
-script:
-  - python setup.py test
-  - codeclimate-test-reporter
+script: python setup.py test
+after_success: codeclimate-test-reporter
 notifications:
   email: false
   slack: noop-fa:zbwZeeSi5kgDshj6FO4BkNZU

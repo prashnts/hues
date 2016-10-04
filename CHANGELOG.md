@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed old reference name in a test, which was causing builds to fail.
 - Many many readme fixes.
 - Test coverage setup.
+- Moved codeclimate test reporting to `after_success` so it won't break forks.
 
 ## [0.2.2] - 2016-10-02
 ### Fixed
