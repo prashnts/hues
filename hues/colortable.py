@@ -4,13 +4,13 @@ Source: http://ascii-table.com/ansi-escape-sequences.php
 '''
 from collections import namedtuple
 
-ANSIColors = namedtuple('ANSIColors', [
+ANSIColors = namedtuple('ANSIColors', (
   'black', 'red', 'green', 'yellow',
   'blue', 'magenta', 'cyan', 'white',
-])
-ANSIStyles = namedtuple('ANSIStyles', [
+))
+ANSIStyles = namedtuple('ANSIStyles', (
   'reset', 'bold', 'italic', 'underline', 'defaultfg', 'defaultbg',
-])
+))
 
 # Style Codes
 STYLE = ANSIStyles(0, 1, 3, 4, 39, 49)
@@ -25,6 +25,10 @@ HI_BG = ANSIColors(*range(100, 108))
 
 # Terminal sequence format
 SEQ = '\033[%sm'
+
+# Extended ANSI Foreground and Background Sequence format
+XFG_SEQ = '38;2;{r};{g};{b}'
+XBG_SEQ = '48;2;{r};{g};{b}'
 
 
 def __gen_keywords__(*args, **kwargs):
@@ -42,3 +46,6 @@ def __gen_keywords__(*args, **kwargs):
   return namedtuple('ANSISequences', fields)(*values)
 
 KEYWORDS = __gen_keywords__(STYLE, FG, bg=BG, bright=HI_FG, bg_bright=HI_BG)
+
+
+__all__ = ('FG', 'BG', 'HI_FG', 'HI_BG', 'KEYWORDS', 'XFG_SEQ', 'XBG_SEQ')
