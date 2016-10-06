@@ -17,5 +17,5 @@ def hex_to_rgb(color):
   if len(hexcode) == 3:
     hexcode = ''.join([x * 2 for x in hexcode])
 
-  cvals = (int(hexcode[i * 2 : (i + 1) * 2], 16) for i in range(0, 3))
+  cvals = (int(hexcode[i * 2:(i + 1) * 2], 16) for i in range(0, 3))
   return RGB(*cvals)
