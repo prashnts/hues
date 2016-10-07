@@ -4,6 +4,7 @@
 This module implements helper functions to allow producing deterministic
 representation of arbitrarily chained props.
 '''
+import re
 from functools import reduce, partial
 
 
@@ -15,7 +16,7 @@ def zero_break(stack):
   return reduce(reducer, stack, tuple())
 
 
-def annihilate(predicate, stack):
+def _annihilate(predicate, stack):
   '''Squash and reduce the input stack.
   Removes the elements of input that match predicate and only keeps the last
   match at the end of the stack.
@@ -25,9 +26,22 @@ def annihilate(predicate, stack):
   return extra + (head,) if head else extra
 
 
+def _annitilate_regex(pregex, stack):
+  '''Squash and reduce input stack with given regex predicate.
+  '''
+  extra = tuple(filter(lambda x: re.match(pregex, str(x)) is None, stack))
+  head = reduce(lambda x, y: y if re.match(pregex, str(y)) is not None else x, stack, None)
+  return extra + (head,) if head else extra
+
+
 def annihilator(predicate):
   '''Build a partial annihilator for given predicate.'''
-  return partial(annihilate, predicate)
+  return partial(_annihilate, predicate)
+
+
+def regxannihilator(pregex):
+  '''Build a partial annihilator for given predicate.'''
+  return partial(_annitilate_regex, pregex)
 
 
 def dedup(stack):

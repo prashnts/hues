@@ -22,8 +22,8 @@ def colorize(string, stack):
   '''Apply optimal ANSI escape sequences to the string.'''
   codes = optimize(stack)
   if len(codes):
-    prefix = SEQ % ';'.join(map(str, codes))
-    suffix = SEQ % STYLE.reset
+    prefix = SEQ.format(';'.join(map(str, codes)))
+    suffix = SEQ.format(STYLE.reset)
     return prefix + string + suffix
   else:
     return string
@@ -50,3 +50,7 @@ class HueString(str):
   @property
   def colorized(self):
     return colorize(self.__string, self.__hue_stack)
+
+
+def xhuestring(str, fg=None, bg=None):
+  pass

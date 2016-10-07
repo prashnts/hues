@@ -50,7 +50,7 @@ def test_ansi_styles():
   assert STYLE.defaultbg == 49
 
 def test_sequence():
-  assert SEQ % BG.black == '\033[40m'
+  assert SEQ.format(BG.black) == '\033[40m'
 
 def test_keywords():
   assert KEYWORDS.bg_black == BG.black

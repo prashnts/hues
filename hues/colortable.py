@@ -24,11 +24,11 @@ HI_FG = ANSIColors(*range(90, 98))
 HI_BG = ANSIColors(*range(100, 108))
 
 # Terminal sequence format
-SEQ = '\033[%sm'
+SEQ = '\033[{0}m'
 
 # Extended ANSI Foreground and Background Sequence format
-XFG_SEQ = '38;2;{r};{g};{b}'
-XBG_SEQ = '48;2;{r};{g};{b}'
+XFG_SEQ = '38;2;{0};{1};{2}'
+XBG_SEQ = '48;2;{0};{1};{2}'
 
 
 def __gen_keywords__(*args, **kwargs):

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - A `utils` submodule with `hex_to_rgb` function. Yes, custom colors coming!
+- Added regexp based optimization of PDA stack.
+
+### Changed
+- Using `.format` strings.
 
 ### Fixed
 - Fixed old reference name in a test, which was causing builds to fail.
