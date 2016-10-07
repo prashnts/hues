@@ -3,17 +3,21 @@ import sys
 from functools import partial
 
 from .colortable import FG, BG, HI_FG, HI_BG, SEQ, STYLE, KEYWORDS
-from .dpda import zero_break, annihilator, dedup, apply
+from .dpda import zero_break, annihilator, regxannihilator, dedup, apply
 
 if sys.version_info.major == 2:
   str = unicode # noqa
 
+XFG_REX = r'38;2;\d{1,3};\d{1,3};\d{1,3}'
+XBG_REX = r'48;2;\d{1,3};\d{1,3};\d{1,3}'
 
 OPTIMIZATION_STEPS = (
-  zero_break,               # Handle Resets using `reset`.
-  annihilator(FG + HI_FG),  # Squash foreground colors to the last value.
-  annihilator(BG + HI_BG),  # Squash background colors to the last value.
-  dedup,                    # Remove duplicates in (remaining) style values.
+  zero_break,                 # Handle Resets using `reset`.
+  annihilator(FG + HI_FG),    # Squash foreground colors to the last value.
+  annihilator(BG + HI_BG),    # Squash background colors to the last value.
+  regxannihilator(XFG_REX),   # Squash extended foreground
+  regxannihilator(XBG_REX),   # Squash extended background
+  dedup,                      # Remove duplicates in (remaining) style values.
 )
 optimize = partial(apply, OPTIMIZATION_STEPS)
 
