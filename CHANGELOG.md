@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - A `utils` submodule with `hex_to_rgb` function. Yes, custom colors coming!
 - Added regexp based optimization of PDA stack.
+- UserString instance, so the Huestr behaves more like a hue string.
 
 ### Changed
 - Using `.format` strings.

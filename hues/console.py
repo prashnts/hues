@@ -96,7 +96,7 @@ class SimpleConsole(object):
     def build_component(content, color=None):
       fg = KEYWORDS.defaultfg if color is None else color
       return (
-        HueString(u'{}'.format(content), hue_stack=(fg,)),
+        HueString(u'{}'.format(content), fg),
         HueString(u' - '),
       )
 
@@ -161,8 +161,8 @@ class PowerlineConsole(SimpleConsole):
       next_bg = KEYWORDS.defaultbg if next_fg is None else (next_fg + 10)
 
       return (
-        HueString(u' {} '.format(content), hue_stack=(text_bg, text_fg)),
-        HueString(u'', hue_stack=(fg, next_bg)),
+        HueString(u' {} '.format(content), text_bg, text_fg),
+        HueString(u'', fg, next_bg),
       )
 
     nargs = ()
