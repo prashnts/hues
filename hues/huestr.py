@@ -1,14 +1,10 @@
 # Unicorns
-import sys
 from functools import partial
-from collections import UserString
 
+from .compat import string, UserString
 from .colortable import FG, BG, HI_FG, HI_BG, SEQ, STYLE, KEYWORDS, XFG_SEQ, XBG_SEQ
 from .dpda import zero_break, annihilator, regxannihilator, dedup, apply
 from .utils import hex_to_rgb
-
-if sys.version_info.major == 2:
-  str = unicode # noqa
 
 XFG_REX = r'38;2;\d{1,3};\d{1,3};\d{1,3}'
 XBG_REX = r'48;2;\d{1,3};\d{1,3};\d{1,3}'
@@ -24,15 +20,15 @@ OPTIMIZATION_STEPS = (
 optimize = partial(apply, OPTIMIZATION_STEPS)
 
 
-def colorize(string, stack):
+def colorize(seq, stack):
   '''Apply optimal ANSI escape sequences to the string.'''
   codes = optimize(stack)
   if len(codes):
-    prefix = SEQ.format(';'.join(map(str, codes)))
+    prefix = SEQ.format(';'.join(map(string, codes)))
     suffix = SEQ.format(STYLE.reset)
-    return prefix + string + suffix
+    return prefix + seq + suffix
   else:
-    return string
+    return seq
 
 
 class HueString(UserString):

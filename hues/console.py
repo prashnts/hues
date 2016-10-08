@@ -9,9 +9,7 @@ from collections import namedtuple
 
 from .huestr import HueString
 from .colortable import KEYWORDS, FG
-
-if sys.version_info.major == 2:
-  str = unicode # noqa
+from .compat import string
 
 
 CONFIG_FNAME = '.hues.yml'
@@ -124,7 +122,7 @@ class SimpleConsole(object):
           label = getattr(self.conf.labels, k)
           color = getattr(self.conf.hues, k)
           nargs.append((label, color))
-    content = u' '.join([str(x) for x in args])
+    content = u' '.join([string(x) for x in args])
     nargs.append((content, self.conf.hues.default))
     return self._base_log(nargs)
 
