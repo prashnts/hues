@@ -15,7 +15,7 @@ def destroy_planet(planet):
 if __name__ == '__main__':
   hues.info('Destroying the planets. Please wait.')
 
-  for planet in ('Murcury', 'Venus', 'Earth', 'Mars', 'Uranus',):
+  for planet in ('Mercury', 'Venus', 'Earth', 'Mars', 'Uranus',):
     try:
       success = destroy_planet(planet)
     except ThisPlanetIsProtected:
