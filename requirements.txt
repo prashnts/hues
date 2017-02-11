@@ -7,7 +7,7 @@ mkdocs==0.16.1
 mox3==0.20.0
 pbr==1.10.0
 py==1.4.32
-pyfakefs==3.0
+pyfakefs==3.1
 pytest==3.0.6
 pytest-cov==2.4.0
 pytest-runner==2.11.1
