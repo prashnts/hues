@@ -3,7 +3,7 @@ coverage==4.3.4
 extras==1.0.0
 fixtures==3.0.0
 linecache2==1.0.0
-mkdocs==0.16.1
+mkdocs==0.16.2
 mox3==0.20.0
 pbr==1.10.0
 py==1.4.32
