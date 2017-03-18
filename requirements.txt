@@ -8,7 +8,7 @@ mox3==0.20.0
 pbr==1.10.0
 py==1.4.33
 pyfakefs==3.1
-pytest==3.0.6
+pytest==3.0.7
 pytest-cov==2.4.0
 pytest-runner==2.11.1
 python-mimeparse==1.6.0
