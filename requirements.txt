@@ -1,4 +1,4 @@
-codeclimate-test-reporter==0.2.0
+codeclimate-test-reporter==0.2.1
 coverage==4.3.4
 extras==1.0.0
 fixtures==3.0.0
