@@ -5,7 +5,7 @@ fixtures==3.0.0
 linecache2==1.0.0
 mkdocs==0.16.2
 mox3==0.20.0
-pbr==1.10.0
+pbr==2.1.0
 py==1.4.33
 pyfakefs==3.1
 pytest==3.0.7
