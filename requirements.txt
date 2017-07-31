@@ -1,5 +1,5 @@
 codeclimate-test-reporter==0.2.3
-coverage==4.3.4
+coverage==4.4.1
 extras==1.0.0
 fixtures==3.0.0
 linecache2==1.0.0
