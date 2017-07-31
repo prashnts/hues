@@ -4,7 +4,7 @@ extras==1.0.0
 fixtures==3.0.0
 linecache2==1.0.0
 mkdocs==0.16.3
-mox3==0.20.0
+mox3==0.23.0
 pbr==2.1.0
 py==1.4.33
 pyfakefs==3.1
